@@ -1,6 +1,6 @@
 import numpy as np
 def create_submission_txt(filename:str, value, precision=6) -> None:
-    """ 
+    """
     Create a submission text based on a filename  and a value
 
     If the value is a list or matrix, it will flatten it properly to be printed

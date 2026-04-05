@@ -29,3 +29,9 @@ subm.create_submission_txt("tests/t3p1",RsH)
 subm.create_submission_txt("tests/t3p2", np.zeros(3))
 
 # Task 4
+RnN330 = nanosat.dcm_inertial2nadir(330)
+omega_RnN_N330 = nanosat.omega_nadir2inertial_N(330)
+print(RnN330)
+print(omega_RnN_N330)
+subm.create_submission_txt("tests/t4p1",RnN330)
+subm.create_submission_txt("tests/t4p2",omega_RnN_N330)

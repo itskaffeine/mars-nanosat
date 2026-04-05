@@ -4,7 +4,7 @@ def eul2dcm(angles, sequence, degrees):
     """ Converts a set of euler angles into a direction cosine matrix
 
     Args:
-        angles (3x1 tuple) - euler angles (theta3, theta2, theta1) in radians or degrees
+        angles (3x1 tuple) - euler angles (theta1, theta2, theta3) in radians or degrees
         sequence (string) - angle rotation sequence (i.e. "313", "321")
         degrees (bool) - units (==True if using degrees)
 
@@ -25,7 +25,7 @@ def eul2dcm(angles, sequence, degrees):
     return dcm
     
 def get_rotation_matrix(angle, axis):
-    """ Converts an angle into a rotation matrix
+    """ Computes a rotation matrix for a rotation about a given axis
 
     Args:
         angle (float) - rotation angle [rad]
@@ -44,3 +44,26 @@ def get_rotation_matrix(angle, axis):
         rotm = np.array([[c, s, 0], [-s, c, 0], [0,0,1]])
 
     return rotm
+
+def axes2dcm(v1, v2, sequence):
+    """ Computes a direction cosine matrix describing the rotation of a frame given two basis vectors.
+
+    Args:
+        v1 (3x1 numpy array) - vector of the rotated frame
+        v2 (3x1 numpy array) - vector of the rotated frame orthogonal to v1
+        sequence (string) - ordered tag assigning axes to the basis vectors "[v1][v2]"
+    Ret:
+        dcm (3x3 numpy array) - direction consine matrix
+    """
+    v1 = v1/np.linalg.norm(v1)
+    v2 = v2/np.linalg.norm(v2)
+
+    if sequence == "xy": dcm = np.array([v1, v2, np.cross(v1,v2)])
+    if sequence == "yz": dcm = np.array([np.cross(v1,v2), v1, v2])
+    if sequence == "zx": dcm = np.array([v2, np.cross(v1,v2), v1])
+
+    if sequence == "yx": dcm = np.array([v2, v1, np.cross(v2,v1)])
+    if sequence == "zy": dcm = np.array([np.cross(v2,v1), v2, v1])
+    if sequence == "xz": dcm = np.array([v1, np.cross(v2,v1), v2])
+
+    return dcm
