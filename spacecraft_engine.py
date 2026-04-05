@@ -1,4 +1,5 @@
 import numpy as np
+import transformations as trans
 class Spacecraft:
     """ Defines a spacecraft at some initial true latitude along a given orbit.
 
@@ -18,3 +19,16 @@ class Spacecraft:
         self.orbit = orbit;
         self.I_B = I_B;
 
+    def dcm_inertial2hill(self, t):
+        """ Provides direction cosine matrix from inertial frame to hill frame.
+        Args:
+            t (float) - time on orbit (s)
+
+        Ret:
+            dcm (3x3 numpy array) - direction cosine matrix from inertial frame to hill frame
+        """
+        true_lat = self.true_lat + np.degrees(t*self.orbit.rate)
+        angles = (self.orbit.RAAN, self.orbit.incl, true_lat)
+        HN = trans.eul2dcm(angles, "313", degrees=True)
+
+        return HN
