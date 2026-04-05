@@ -26,7 +26,7 @@ NS_INIT_OMEGA_B = np.array([1.00, 1.75, -2.20]) #           [deg/s]
 NS_INIT_TRUE_LAT = 60 #                                     [deg]
 NS_INIT = np.concatenate([NS_INIT_ATT_MRP, NS_INIT_OMEGA_B])
 # Nanosat Physical Constants
-NS_I_B = np.array([10,0,0], [0,5,0], [0,0,7.5]) #           [kg m^2]
+NS_I_B = np.array([[10,0,0], [0,5,0], [0,0,7.5]]) #           [kg m^2]
 
 # Mothercraft Initial Conditions
 MC_INIT_TRUE_LAT = 250 # [deg]
