@@ -4,7 +4,7 @@ def eul2dcm(angles, sequence, degrees):
     """ Converts a set of euler angles into a direction cosine matrix
 
     Args:
-        angles (tuple) - euler angles (theta1, theta2, theta3) in radians or degrees
+        angles (3x1 tuple) - euler angles (theta3, theta2, theta1) in radians or degrees
         sequence (string) - angle rotation sequence (i.e. "313", "321")
         degrees (bool) - units (==True if using degrees)
 

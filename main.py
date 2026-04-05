@@ -21,3 +21,11 @@ subm.create_submission_txt("tests/t1p4",gmo1150[1])
 hn300 = nanosat.dcm_inertial2hill(300)
 
 subm.create_submission_txt("tests/t2p1",hn300)
+
+# Task 3
+RsH = nanosat.dcm_inertial2sun() 
+
+subm.create_submission_txt("tests/t3p1",RsH)
+subm.create_submission_txt("tests/t3p2", np.zeros(3))
+
+# Task 4

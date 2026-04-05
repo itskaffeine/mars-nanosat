@@ -21,6 +21,7 @@ class Spacecraft:
 
     def dcm_inertial2hill(self, t):
         """ Provides direction cosine matrix from inertial frame to hill frame.
+
         Args:
             t (float) - time on orbit (s)
 
@@ -29,6 +30,22 @@ class Spacecraft:
         """
         true_lat = self.true_lat + np.degrees(t*self.orbit.rate)
         angles = (self.orbit.RAAN, self.orbit.incl, true_lat)
-        HN = trans.eul2dcm(angles, "313", degrees=True)
+        dcm_HN = trans.eul2dcm(angles, "313", degrees=True)
 
-        return HN
+        return dcm_HN
+    
+    def dcm_inertial2sun(self):
+        """ Provides direction cosine matrix from inertial frame to sun pointing reference frame.
+
+        Note that the inertial frame is psudeo inertial s.t. the sun is always along n2.
+
+        Args:
+            t (float) - time on orbit (s)
+
+        Ret:
+            dcm (3x3 numpy array) - direction cosine matrix from inertial frame to sun pointing reference frame
+        """
+        angles = (180,0,90)
+        dcm_RsH = trans.eul2dcm(angles, "321", degrees=True)
+
+        return dcm_RsH
