@@ -23,9 +23,9 @@ hn300 = lmo.dcm_inertial2hill(300)
 subm.create_submission_txt("tests/t2p1",hn300)
 
 # Task 3
-RsH = lmo.dcm_inertial2sun() 
+RsN = lmo.dcm_inertial2sun() 
 
-subm.create_submission_txt("tests/t3p1",RsH)
+subm.create_submission_txt("tests/t3p1",RsN)
 subm.create_submission_txt("tests/t3p2", np.zeros(3))
 
 # Task 4
@@ -41,3 +41,23 @@ omega_RcN_N330 = lmo.omega_comms2inertial_N(330,gmo)
 
 subm.create_submission_txt("tests/t5p1",RcN330)
 subm.create_submission_txt("tests/t5p2",omega_RcN_N330)
+
+# Task 6
+RsN0 = lmo.dcm_inertial2sun()
+
+RnN0 = lmo.dcm_inertial2nadir(0)
+omega_RnN_N0 = lmo.omega_nadir2inertial_N(0)
+
+RcN0 = lmo.dcm_inertial2comms(0,gmo)
+omega_RcN_N0 = lmo.omega_comms2inertial_N(0,gmo)
+
+BRs_err = nanosat.attitude_error_evaluation(0,c.NS_INIT,RsN0,np.array([0,0,0]))
+BRn_err = nanosat.attitude_error_evaluation(0,c.NS_INIT,RnN0,omega_RnN_N0)
+BRc_err = nanosat.attitude_error_evaluation(0,c.NS_INIT,RcN0,omega_RcN_N0)
+
+subm.create_submission_txt("tests/t6p1",BRs_err[:3])
+subm.create_submission_txt("tests/t6p2",BRs_err[3:])
+subm.create_submission_txt("tests/t6p3",BRn_err[:3])
+subm.create_submission_txt("tests/t6p4",BRn_err[3:])
+subm.create_submission_txt("tests/t6p5",BRc_err[:3])
+subm.create_submission_txt("tests/t6p6",BRc_err[3:])

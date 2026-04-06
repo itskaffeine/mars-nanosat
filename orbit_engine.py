@@ -79,7 +79,7 @@ class Orbit:
         Note that the inertial frame is psudeo inertial s.t. the sun is always along n2.
 
         Ret:
-            dcm (3x3 numpy array) - direction cosine matrix from inertial frame to sun-pointing reference frame
+            dcm_RsN (3x3 numpy array) - direction cosine matrix from inertial frame to sun-pointing reference frame
         """
         r3 = np.array([0,1,0])  # desire b_3 pointing along n_2 (sun direction)
         r1 = np.array([-1,0,0]) # fixing attitude s.t. b_1 along -n_1
@@ -94,7 +94,7 @@ class Orbit:
             t (float) - time on orbit (s)
 
         Ret:
-            dcm (3x3 numpy array) - direction cosine matrix from inertial frame to nadir-pointing reference frame
+            dcm_RnN (3x3 numpy array) - direction cosine matrix from inertial frame to nadir-pointing reference frame
         """
         dcm_HN = self.dcm_inertial2hill(t)
 
@@ -142,7 +142,7 @@ class Orbit:
             target (orbit class object) - spacecraft recieving communication broadcast
 
         Ret:
-            dcm (3x3 numpy array) - direction cosine matrix from inertial frame to nadir-pointing reference frame
+            dcm_RcN (3x3 numpy array) - direction cosine matrix from inertial frame to nadir-pointing reference frame
         """
         R_N_local = self.true_lat2state(t)[0]
         R_N_target = target.true_lat2state(t)[0]
