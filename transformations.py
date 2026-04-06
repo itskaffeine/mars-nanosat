@@ -3,7 +3,7 @@ import numpy as np
 def eul2dcm(angles, sequence, degrees):
     """ Converts a set of euler angles into a direction cosine matrix
 
-    Args:
+    Params:
         angles (3x1 tuple) - euler angles (theta1, theta2, theta3) in radians or degrees
         sequence (string) - angle rotation sequence (i.e. "313", "321")
         degrees (bool) - units (==True if using degrees)
@@ -27,7 +27,7 @@ def eul2dcm(angles, sequence, degrees):
 def get_rotation_matrix(angle, axis):
     """ Computes a rotation matrix for a rotation about a given axis
 
-    Args:
+    Params:
         angle (float) - rotation angle [rad]
         axis (char) - rotation axis
     Ret:
@@ -48,7 +48,7 @@ def get_rotation_matrix(angle, axis):
 def axes2dcm(v1, v2, sequence):
     """ Computes a direction cosine matrix describing the rotation of a frame given two basis vectors.
 
-    Args:
+    Params:
         v1 (3x1 numpy array) - vector of the rotated frame
         v2 (3x1 numpy array) - vector of the rotated frame orthogonal to v1
         sequence (string) - ordered tag assigning axes to the basis vectors "[v1][v2]"
