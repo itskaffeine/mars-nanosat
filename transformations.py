@@ -196,6 +196,9 @@ def subMRP(q1,q2):
     dot2 = np.dot(q2,q2)
     dot12 = np.dot(q1,q2)
 
+    if (1+ dot1 * dot2 + 2*dot12) < 1e-12:
+        return np.zeros(3)
+
     q = (1-dot2)*q1-(1-dot1)*q2+2*np.cross(q1,q2)
     q = q/(1+ dot1 * dot2 + 2*dot12)
 
