@@ -53,10 +53,12 @@ class Spacecraft:
     def rk4(self, tmax, dt, control, target=None):
         t = 0
         x = self.x0
-        u = control(x,t,target)
+        u, x_err, mode = control(x,t,target)
         x_hist = [x.copy()]
         u_hist = [u]
         t_hist = [t]
+        x_err_hist = [x_err]
+        mode_hist = [mode]
 
         while t < tmax:
             k1 = dt*self.dynamics(x,t,u)
@@ -70,14 +72,16 @@ class Spacecraft:
                 x[:3] = -x[:3]/sigma_sq
             
             t = t+dt
-            u = control(x,t,target)
+            u, x_err, mode = control(x,t,target)
 
             x_hist.append(x.copy())
             t_hist.append(t)
             u_hist.append(u)
+            x_err_hist.append(x_err)
+            mode_hist.append(mode)
             print(x,t,u)
             
-        return np.array(x_hist), np.array(u_hist), np.array(t_hist)
+        return np.array(x_hist), np.array(u_hist), np.array(t_hist), np.array(x_err_hist), mode_hist
 
     def dynamics(self, state, t, u):
 
@@ -96,28 +100,28 @@ class Spacecraft:
         dcm_RsN = self.orbit.dcm_inertial2sun()
         x_err = self.attitude_error_evaluation(t, x, dcm_RsN, np.array([0,0,0]))
         u_B = -1/180 * x_err[:3] - 1/6 * x_err[3:]
-        return u_B
+        return u_B, x_err, 0
     
     def nadir_pointing_torque(self, x, t, target=None):
         dcm_RnN = self.orbit.dcm_inertial2nadir(t)
         omega_RnN_N = self.orbit.omega_nadir2inertial_N(t)
         x_err = self.attitude_error_evaluation(t, x, dcm_RnN, omega_RnN_N)
         u_B = -1/180 * x_err[:3] - 1/6 * x_err[3:]
-        return u_B
+        return u_B, x_err, 1
 
     def comms_pointing_torque(self, x, t, target=None):
         dcm_RcN = self.orbit.dcm_inertial2comms(t, target)
         omega_RcN_N = self.orbit.omega_comms2inertial_N(t, target)
         x_err = self.attitude_error_evaluation(t, x, dcm_RcN, omega_RcN_N)
         u_B = -1/180 * x_err[:3] - 1/6 * x_err[3:]
-        return u_B
+        return u_B, x_err, -1
     
     def mission_torque(self, x, t, target=None):
         R_N_local = self.orbit.true_lat2state(t)[0]
         R_N_target = target.true_lat2state(t)[0]
         pos_angle = np.acos(np.dot(R_N_local,R_N_target)/(np.linalg.norm(R_N_local)*np.linalg.norm(R_N_target)))
 
-        if R_N_local[2] > 0:
+        if R_N_local[1] > 0:
             print("SUN POINTING")
             return self.sun_pointing_torque(x,t)
         elif np.rad2deg(pos_angle) < 35:
@@ -127,10 +131,10 @@ class Spacecraft:
             print("NADIR POINTING")
             return self.nadir_pointing_torque(x,t)
 
-def zero_torque(x, t, target=None):
-    return [0,0,0]
+    def zero_torque(self, x, t, target=None):
+        return [0,0,0], 0, 0
 
-def const_torque(x, t, target=None):
-    return [.01,-.01,.02]
+    def const_torque(self, x, t, target=None):
+        return [.01,-.01,.02], 0, 0
 
 

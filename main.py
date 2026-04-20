@@ -64,68 +64,68 @@ subm.create_submission_txt("tests/t6/p4",BRn_err[3:])
 subm.create_submission_txt("tests/t6/p5",BRc_err[:3])
 subm.create_submission_txt("tests/t6/p6",BRc_err[3:])
 
-# # Task 7
-# x_task7, u_task7, t_task7 = nanosat.rk4(500, 1, se.zero_torque)
-# x_500 = x_task7[-1,:]
-# omega_BN_B_500 = x_500[3:]
-# angMom_B_500 = c.NS_I_B @ omega_BN_B_500
-# subm.create_submission_txt("tests/t7/p1",angMom_B_500)
+# Task 7
+x_task7, u_task7, t_task7, x_err_task7, state_task7 = nanosat.rk4(500, 1, nanosat.zero_torque)
+x_500 = x_task7[-1,:]
+omega_BN_B_500 = x_500[3:]
+angMom_B_500 = c.NS_I_B @ omega_BN_B_500
+subm.create_submission_txt("tests/t7/p1",angMom_B_500)
 
-# kEnergy_500 = 1/2*omega_BN_B_500.T @ c.NS_I_B @ omega_BN_B_500
-# subm.create_submission_txt("tests/t7/p2",[kEnergy_500])
+kEnergy_500 = 1/2*omega_BN_B_500.T @ c.NS_I_B @ omega_BN_B_500
+subm.create_submission_txt("tests/t7/p2",[kEnergy_500])
 
-# sigma_BN_500 = x_500[:3]
-# subm.create_submission_txt("tests/t7/p3",sigma_BN_500)
+sigma_BN_500 = x_500[:3]
+subm.create_submission_txt("tests/t7/p3",sigma_BN_500)
 
-# dcm_BN_500 = trans.MRP2C(sigma_BN_500)
-# angMom_N_500 = np.asarray(dcm_BN_500.T @ angMom_B_500)
-# subm.create_submission_txt("tests/t7/p4",angMom_N_500)
+dcm_BN_500 = trans.MRP2C(sigma_BN_500)
+angMom_N_500 = np.asarray(dcm_BN_500.T @ angMom_B_500)
+subm.create_submission_txt("tests/t7/p4",angMom_N_500)
 
-# x_task7, u_task7, t_task7 = nanosat.rk4(100, 1, se.const_torque)
-# x_100 = x_task7[-1,:]
-# sigma_BN_100 = x_100[:3]
-# subm.create_submission_txt("tests/t7/p5",sigma_BN_100)
+x_task7, u_task7, t_task7, x_err_task7, state_task7 = nanosat.rk4(100, 1, nanosat.const_torque)
+x_100 = x_task7[-1,:]
+sigma_BN_100 = x_100[:3]
+subm.create_submission_txt("tests/t7/p5",sigma_BN_100)
 
-# # Task 8
-# print("TASK 8 BEGINS HERE")
-# x_task8, u_task8, t_task8 = nanosat.rk4(400, 1, nanosat.sun_pointing_torque)
-# sigma_BN_400 = x_task8[400,:3]
-# sigma_BN_200 = x_task8[200,:3]
-# sigma_BN_100 = x_task8[100,:3]
-# sigma_BN_15 = x_task8[15,:3]
-# subm.create_submission_txt("tests/t8/p0",[1/6,1/180])
-# subm.create_submission_txt("tests/t8/p1",sigma_BN_15)
-# subm.create_submission_txt("tests/t8/p2",sigma_BN_100)
-# subm.create_submission_txt("tests/t8/p3",sigma_BN_200)
-# subm.create_submission_txt("tests/t8/p4",sigma_BN_400)
+# Task 8
+print("TASK 8 BEGINS HERE")
+x_task8, u_task8, t_task8, x_err_task8, state_task8 = nanosat.rk4(400, 1, nanosat.sun_pointing_torque)
+sigma_BN_400 = x_task8[400,:3]
+sigma_BN_200 = x_task8[200,:3]
+sigma_BN_100 = x_task8[100,:3]
+sigma_BN_15 = x_task8[15,:3]
+subm.create_submission_txt("tests/t8/p0",[1/6,1/180])
+subm.create_submission_txt("tests/t8/p1",sigma_BN_15)
+subm.create_submission_txt("tests/t8/p2",sigma_BN_100)
+subm.create_submission_txt("tests/t8/p3",sigma_BN_200)
+subm.create_submission_txt("tests/t8/p4",sigma_BN_400)
 
-# # Task 9
-# print("TASK 9 BEGINS HERE")
-# x_task9, u_task9, t_task9 = nanosat.rk4(400, 1, nanosat.nadir_pointing_torque)
-# sigma_BN_400 = x_task9[400,:3]
-# sigma_BN_200 = x_task9[200,:3]
-# sigma_BN_100 = x_task9[100,:3]
-# sigma_BN_15 = x_task9[15,:3]
-# subm.create_submission_txt("tests/t9/p1",sigma_BN_15)
-# subm.create_submission_txt("tests/t9/p2",sigma_BN_100)
-# subm.create_submission_txt("tests/t9/p3",sigma_BN_200)
-# subm.create_submission_txt("tests/t9/p4",sigma_BN_400)
+# Task 9
+print("TASK 9 BEGINS HERE")
+x_task9, u_task9, t_task9, x_err_task9, state_task9 = nanosat.rk4(400, 1, nanosat.nadir_pointing_torque)
+sigma_BN_400 = x_task9[400,:3]
+sigma_BN_200 = x_task9[200,:3]
+sigma_BN_100 = x_task9[100,:3]
+sigma_BN_15 = x_task9[15,:3]
+subm.create_submission_txt("tests/t9/p1",sigma_BN_15)
+subm.create_submission_txt("tests/t9/p2",sigma_BN_100)
+subm.create_submission_txt("tests/t9/p3",sigma_BN_200)
+subm.create_submission_txt("tests/t9/p4",sigma_BN_400)
 
-# # Task 10
-# print("TASK 10 BEGINS HERE")
-# x_task10, u_task10, t_task10 = nanosat.rk4(400, 1, nanosat.comms_pointing_torque, gmo)
-# sigma_BN_400 = x_task10[400,:3]
-# sigma_BN_200 = x_task10[200,:3]
-# sigma_BN_100 = x_task10[100,:3]
-# sigma_BN_15 = x_task10[15,:3]
-# subm.create_submission_txt("tests/t10/p1",sigma_BN_15)
-# subm.create_submission_txt("tests/t10/p2",sigma_BN_100)
-# subm.create_submission_txt("tests/t10/p3",sigma_BN_200)
-# subm.create_submission_txt("tests/t10/p4",sigma_BN_400)
+# Task 10
+print("TASK 10 BEGINS HERE")
+x_task10, u_task10, t_task10, x_err_task10, state_task10 = nanosat.rk4(400, 1, nanosat.comms_pointing_torque, gmo)
+sigma_BN_400 = x_task10[400,:3]
+sigma_BN_200 = x_task10[200,:3]
+sigma_BN_100 = x_task10[100,:3]
+sigma_BN_15 = x_task10[15,:3]
+subm.create_submission_txt("tests/t10/p1",sigma_BN_15)
+subm.create_submission_txt("tests/t10/p2",sigma_BN_100)
+subm.create_submission_txt("tests/t10/p3",sigma_BN_200)
+subm.create_submission_txt("tests/t10/p4",sigma_BN_400)
 
 # Task 11
 print("TASK 11 BEGINS HERE")
-x_task11, u_task11, t_task11 = nanosat.rk4(6500, 1, nanosat.mission_torque, gmo)
+x_task11, u_task11, t_task11, x_err_task11, state_task11 = nanosat.rk4(6500, 1, nanosat.mission_torque, gmo)
 sigma_BN_300 = x_task11[300,:3]
 sigma_BN_2100 = x_task11[2100,:3]
 sigma_BN_3400 = x_task11[3400,:3]
@@ -221,8 +221,9 @@ finalize_plot(r'Angular Velocity [$rad/s$]')
 
 # LMO Mission Pointing
 plt.figure()
-plt.plot(t_task11, x_task11[:,0], label=r'$\sigma_1$')
-plt.plot(t_task11, x_task11[:,1], label=r'$\sigma_2$')
-plt.plot(t_task11, x_task11[:,2], label=r'$\sigma_3$')
+plt.plot(t_task8, x_task8[:,0], label=r'$\sigma_1$')
+plt.plot(t_task8, x_task8[:,1], label=r'$\sigma_2$')
+plt.plot(t_task8, x_task8[:,2], label=r'$\sigma_3$')
 finalize_plot(r'Attitude')
 plt.show()
+
